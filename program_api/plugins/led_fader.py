@@ -1,7 +1,7 @@
 import colorsys
 
-from device_controller.controller.controller_manager import ControllerManager
-from device_controller.programs.program_plugin import ProgramPlugin
+from device_controller_api.controller.controller_manager import ControllerManager
+from program_api.programs.program_plugin import ProgramPlugin
 
 
 class LEDFader(ProgramPlugin):

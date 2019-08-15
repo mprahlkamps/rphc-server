@@ -20,7 +20,8 @@ INSTALLED_APPS = [
     'rest_framework',
 
     'authentication',
-    'device_controller'
+    'device_controller_api',
+    'program_api'
 ]
 
 MIDDLEWARE = [
@@ -36,7 +37,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'rbp_controller.urls'
+ROOT_URLCONF = 'rphc_server.urls'
 
 TEMPLATES = [
     {
@@ -54,7 +55,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'rbp_controller.wsgi.application'
+WSGI_APPLICATION = 'rphc_server.wsgi.application'
 
 DATABASES = {
     'default': {
@@ -143,7 +144,7 @@ LOGGING = {
             'level': 'WARNING',
             'handlers': ['console'],
         },
-        'device_controller': {
+        'device_controller_api': {
             'level': 'INFO',
             'handlers': ['console'],
             'propagate': False,

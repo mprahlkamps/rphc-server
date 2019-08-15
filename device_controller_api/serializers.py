@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from device_controller.models import AddressableLEDStrip, LEDStrip, RemoteSocket, Transmitter, Controller
+from device_controller_api.models import AddressableLEDStrip, LEDStrip, RemoteSocket, Transmitter, Controller
 
 
 class ControllerSerializer(serializers.HyperlinkedModelSerializer):

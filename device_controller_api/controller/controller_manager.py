@@ -2,10 +2,10 @@ from typing import Dict
 
 import pigpio
 
-from device_controller.controller.remote_socket_controller import RemoteSocketController
-from device_controller.controller.transmitter_controller import TransmitterController
-from device_controller.controller.ws2801_controller import WS2801Controller
-from device_controller.models import Controller, AddressableLEDStrip, Transmitter, RemoteSocket
+from device_controller_api.controller.remote_socket_controller import RemoteSocketController
+from device_controller_api.controller.transmitter_controller import TransmitterController
+from device_controller_api.controller.ws2801_controller import WS2801Controller
+from device_controller_api.models import Controller, AddressableLEDStrip, Transmitter, RemoteSocket
 
 
 class ControllerManager:

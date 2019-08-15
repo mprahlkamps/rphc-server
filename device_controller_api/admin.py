@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from device_controller.models import AddressableLEDStrip, LEDStrip, RemoteSocket, Transmitter, Controller
+from device_controller_api.models import AddressableLEDStrip, LEDStrip, RemoteSocket, Transmitter, Controller
 
 admin.site.register(Controller)
 admin.site.register(AddressableLEDStrip)

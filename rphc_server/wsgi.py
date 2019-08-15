@@ -1,5 +1,5 @@
 """
-WSGI config for rbp_controller project.
+WSGI config for rphc_server project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'rbp_controller.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'rphc_server.settings.production')
 
 application = get_wsgi_application()

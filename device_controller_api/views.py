@@ -2,10 +2,9 @@ from rest_framework import viewsets
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 
-from device_controller.controller.controller_manager import ControllerManager
-from device_controller.models import AddressableLEDStrip, RemoteSocket, Transmitter, Controller
-from device_controller.programs.program_manager import ProgramManager
-from device_controller.serializers import AddressableLedStripSerializer, RemoteSocketSerializer, \
+from device_controller_api.controller.controller_manager import ControllerManager
+from device_controller_api.models import AddressableLEDStrip, RemoteSocket, Transmitter, Controller
+from device_controller_api.serializers import AddressableLedStripSerializer, RemoteSocketSerializer, \
     TransmitterSerializer, ControllerSerializer
 
 
@@ -27,42 +26,6 @@ class RemoteSocketViewSet(viewsets.ModelViewSet):
 class TransmitterViewSet(viewsets.ModelViewSet):
     queryset = Transmitter.objects.all()
     serializer_class = TransmitterSerializer
-
-
-class ListPrograms(GenericAPIView):
-    @staticmethod
-    def get(request):
-        return Response({'programs': ProgramManager.get_program_list()})
-
-
-class StartProgram(GenericAPIView):
-
-    @staticmethod
-    def post(request):
-        params = request.query_params
-        name = params['name']
-        ProgramManager.start_program(name)
-        return Response({'msg': 'Starting program {}'.format(name)})
-
-
-class StopProgram(GenericAPIView):
-    @staticmethod
-    def post(request):
-        ProgramManager.stop_program()
-        return Response({'msg': 'Stopping program'})
-
-
-class RestartProgram(GenericAPIView):
-    @staticmethod
-    def post(request):
-        return Response({'msg': 'Restarting program'})
-
-
-class SetProgramVariables(GenericAPIView):
-    @staticmethod
-    def post(request):
-        ProgramManager.set_variables(request.data)
-        return Response({'msg': 'Setting program variables'})
 
 
 class SetAddressableLedStripColor(GenericAPIView):

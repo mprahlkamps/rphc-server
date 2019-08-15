@@ -1,4 +1,4 @@
-from device_controller.controller.transmitter_controller import TransmitterController
+from device_controller_api.controller.transmitter_controller import TransmitterController
 
 
 class RemoteSocketController:

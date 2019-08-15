@@ -7,7 +7,7 @@ import time
 from threading import Thread, Event
 from typing import List, Optional
 
-from device_controller.programs.program_plugin import ProgramPlugin
+from program_api.programs.program_plugin import ProgramPlugin
 from utils.exceptions import IllegalStateException
 
 logger = logging.getLogger(__name__)
@@ -23,13 +23,13 @@ class ProgramManager:
     def load_programs():
         logger.debug("Loading plugin programs")
 
-        files = os.listdir('plugins')
+        files = os.listdir('program_api/plugins')
         test = re.compile(".py$", re.IGNORECASE)
         files = filter(test.search, files)
         module_names = ['.' + os.path.splitext(f)[0] for f in files]
 
         for mod in module_names:
-            importlib.import_module(mod, package='plugins')
+            importlib.import_module(mod, package='program_api.plugins')
 
         for plugin in ProgramPlugin.plugins:
             logger.debug("Loaded plugin {}".format(plugin))
