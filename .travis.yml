@@ -6,6 +6,11 @@ python:
 
 install:
   - pip install -r requirements.txt
+  - pip install coveralls
 
 script:
-  - python manage.py test --settings=rbp_controller.settings.testing
+#  - python manage.py test --settings=rbp_controller.settings.testing
+  - coverage run manage.py test --settings=rbp_controller.settings.testing
+
+after_success:
+  - coveralls
