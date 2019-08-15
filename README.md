@@ -1,1 +1,1 @@
-# rphc-server
+# Raspberry Pi Home Control Server

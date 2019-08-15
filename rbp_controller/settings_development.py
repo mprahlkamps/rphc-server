@@ -144,7 +144,7 @@ LOGGING = {
             'handlers': ['console'],
         },
         'device_controller': {
-            'level': 'DEBUG',
+            'level': 'INFO',
             'handlers': ['console'],
             'propagate': False,
         },
