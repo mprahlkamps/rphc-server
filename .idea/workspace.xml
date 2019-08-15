@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="afc0faa2-0b4d-4574-8594-a815062577ad" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/rphc-server.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-    </list>
+    <list default="true" id="afc0faa2-0b4d-4574-8594-a815062577ad" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,12 +11,37 @@
   <component name="FileEditorManager">
     <leaf>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/rbp_controller/urls.py">
+        <entry file="file://$PROJECT_DIR$/rbp_controller/settings_production.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
+            <state relative-caret-position="119">
+              <caret line="9" column="13" lean-forward="true" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
               <folding>
-                <element signature="e#0#32#0" expanded="true" />
+                <element signature="e#241#519#0" />
+                <element signature="e#534#980#0" />
+                <element signature="e#1032#1503#0" />
+                <element signature="e#1038#1500#0" />
+                <element signature="e#1175#1493#0" />
+                <element signature="e#1211#1482#0" />
+                <element signature="e#1571#1699#0" />
+                <element signature="e#1588#1697#0" />
+                <element signature="e#1728#2124#0" />
+                <element signature="e#1734#1833#0" />
+                <element signature="e#1839#1928#0" />
+                <element signature="e#1934#2024#0" />
+                <element signature="e#2030#2121#0" />
+                <element signature="e#2143#2358#0" />
+                <element signature="e#2179#2240#0" />
+                <element signature="e#2373#3037#0" />
+                <element signature="e#3104#3164#0" />
+                <element signature="e#3176#3950#0" />
+                <element signature="e#3253#3522#0" />
+                <element signature="e#3274#3400#0" />
+                <element signature="e#3421#3515#0" />
+                <element signature="e#3540#3689#0" />
+                <element signature="e#3561#3683#0" />
+                <element signature="e#3706#3948#0" />
+                <element signature="e#3720#3800#0" />
+                <element signature="e#3831#3941#0" />
               </folding>
             </state>
           </provider>
@@ -124,12 +144,12 @@
       <option name="presentableId" value="Default" />
       <updated>1565892294364</updated>
       <workItem from="1565892295958" duration="267000" />
-      <workItem from="1565892589211" duration="339000" />
+      <workItem from="1565892589211" duration="685000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="606000" />
+    <option name="totallyTimeSpent" value="952000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -140,7 +160,7 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32936078" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32936078" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -198,6 +218,41 @@
           <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
           <folding>
             <element signature="e#0#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rbp_controller/settings_production.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="9" column="13" lean-forward="true" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+          <folding>
+            <element signature="e#241#519#0" />
+            <element signature="e#534#980#0" />
+            <element signature="e#1032#1503#0" />
+            <element signature="e#1038#1500#0" />
+            <element signature="e#1175#1493#0" />
+            <element signature="e#1211#1482#0" />
+            <element signature="e#1571#1699#0" />
+            <element signature="e#1588#1697#0" />
+            <element signature="e#1728#2124#0" />
+            <element signature="e#1734#1833#0" />
+            <element signature="e#1839#1928#0" />
+            <element signature="e#1934#2024#0" />
+            <element signature="e#2030#2121#0" />
+            <element signature="e#2143#2358#0" />
+            <element signature="e#2179#2240#0" />
+            <element signature="e#2373#3037#0" />
+            <element signature="e#3104#3164#0" />
+            <element signature="e#3176#3950#0" />
+            <element signature="e#3253#3522#0" />
+            <element signature="e#3274#3400#0" />
+            <element signature="e#3421#3515#0" />
+            <element signature="e#3540#3689#0" />
+            <element signature="e#3561#3683#0" />
+            <element signature="e#3706#3948#0" />
+            <element signature="e#3720#3800#0" />
+            <element signature="e#3831#3941#0" />
           </folding>
         </state>
       </provider>
