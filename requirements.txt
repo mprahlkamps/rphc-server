@@ -1,0 +1,5 @@
+Django==2.2.2
+django-cors-headers==3.0.2
+djangorestframework==3.9.4
+djangorestframework-simplejwt==4.3.0
+pigpio==1.42
