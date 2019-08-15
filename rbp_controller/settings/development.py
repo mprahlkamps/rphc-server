@@ -4,11 +4,8 @@ from datetime import timedelta
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-with open('/etc/secret_key.txt') as f:
-    SECRET_KEY = f.read().strip()
-
-DEBUG = False
-
+SECRET_KEY = 'zd^g9t22n&56=ymtctale3yu0+d9o1y+(rkr^t2+y*iiz^69&a'
+DEBUG = True
 ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
@@ -62,7 +59,7 @@ WSGI_APPLICATION = 'rbp_controller.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, '../../db.sqlite3'),
     }
 }
 
