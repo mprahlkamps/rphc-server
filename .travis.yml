@@ -9,7 +9,7 @@ install:
   - pip install coveralls
 
 script:
-  - coverage run --source=rbp_controller manage.py test --settings=rbp_controller.settings.testing
+  - coverage run --source=authentication,device_controller,utils,rbp_controller manage.py test --settings=rbp_controller.settings.testing
 
 after_success:
   - coveralls
