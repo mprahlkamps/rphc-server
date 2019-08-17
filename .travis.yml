@@ -9,7 +9,7 @@ install:
   - pip install coveralls
 
 script:
-  - coverage run --source=authentication,device_controller_api,program_api,utils,rphc_server manage.py test --settings=rphc_server.settings.testing
+  - coverage run manage.py test --settings=rphc_server.settings.testing
 
 after_success:
   - coveralls
