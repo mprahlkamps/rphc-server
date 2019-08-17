@@ -11,9 +11,37 @@ class AuthenticationTest(TestCase):
     def tearDown(self):
         pass
 
-    def test_user_no_email(self):
+    def test_create_user(self):
+        try:
+            user = User.objects.create_user(email="admin@admin.de", password="admin")
+        except Exception as e:
+            self.fail(e)
+
+        self.assertIsNotNone(user)
+
+    def test_create_user_no_email(self):
         with self.assertRaises(ValueError):
             User.objects.create_user(email="", password="admin")
+
+    def test_create_super_user(self):
+        try:
+            user = User.objects.create_superuser(email="admin@admin.de", password="admin")
+        except Exception as e:
+            self.fail(e)
+
+        self.assertIsNotNone(user)
+
+    def test_create_super_user_no_email(self):
+        with self.assertRaises(ValueError):
+            User.objects.create_user(email="", password="admin")
+
+    def test_create_super_user_no_staff(self):
+        with self.assertRaises(ValueError):
+            User.objects.create_superuser(email="admin@admin.de", password="admin", is_staff=False)
+
+    def test_create_super_user_no_superuser(self):
+        with self.assertRaises(ValueError):
+            User.objects.create_superuser(email="admin@admin.de", password="admin", is_superuser=False)
 
     def test_user_to_str(self):
         user = User.objects.create_user(email="admin@admin.de", password="admin")
