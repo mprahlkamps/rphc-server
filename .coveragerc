@@ -1,5 +1,5 @@
 [run]
-source = authentication,device_controller_api,program_api,utils,rphc_server
+source = authentication,device_controller_api,program_api,utils
 
 [report]
 omit = */migrations/*,*/tests/*
