@@ -14,9 +14,6 @@ class ControllerManager:
     remote_socket_controller: Dict[int, RemoteSocketController] = {}
     addressable_led_controller: Dict[int, WS2801Controller] = {}
 
-    def __init__(self):
-        pass
-
     @staticmethod
     def get_pi_controller(pi_id: int) -> pigpio.pi:
         """
