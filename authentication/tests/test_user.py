@@ -3,7 +3,7 @@ from django.test import TestCase
 from authentication.models import User
 
 
-class AuthenticationTest(TestCase):
+class UserTestCase(TestCase):
 
     def setUp(self):
         pass
@@ -14,6 +14,7 @@ class AuthenticationTest(TestCase):
     def test_create_user(self):
         try:
             user = User.objects.create_user(email="admin@admin.de", password="admin")
+            user.save()
         except Exception as e:
             self.fail(e)
 
@@ -26,6 +27,7 @@ class AuthenticationTest(TestCase):
     def test_create_super_user(self):
         try:
             user = User.objects.create_superuser(email="admin@admin.de", password="admin")
+            user.save()
         except Exception as e:
             self.fail(e)
 

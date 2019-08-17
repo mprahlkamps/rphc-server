@@ -5,7 +5,7 @@ from django.test import TestCase, Client
 from authentication.models import User
 
 
-class AuthenticationTest(TestCase):
+class AuthenticationTestCase(TestCase):
 
     def setUp(self):
         user = User.objects.create_user("admin@admin.de", "admin")
@@ -22,7 +22,7 @@ class AuthenticationTest(TestCase):
 
         self.assertEqual(response.status_code, 200)
 
-    def test_authenticate_false(self):
+    def test_authenticate_wrong_password(self):
         response = self.client.post('/api/auth/token/',
                                     content_type="application/json",
                                     data={"email": "admin@admin.de", "password": "wrong_password"})

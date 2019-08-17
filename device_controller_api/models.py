@@ -7,7 +7,7 @@ class Controller(models.Model):
     port = models.IntegerField()
 
     def __str__(self):
-        return "RaspberryPi ({}:{})".format(self.hostname, self.port)
+        return "Controller ({}:{})".format(self.hostname, self.port)
 
 
 class AddressableLEDStrip(models.Model):
@@ -37,7 +37,7 @@ class Transmitter(models.Model):
     retries = models.IntegerField()
 
     def __str__(self):
-        return "Remote Socket Transmitter ({})".format(self.pin)
+        return "Transmitter ({})".format(self.pin)
 
 
 class RemoteSocket(models.Model):
