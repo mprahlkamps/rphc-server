@@ -2,11 +2,13 @@ import time
 
 import pigpio
 
+from device_controller_api.controller.gpio.gpio_controller import GPIOController
+
 
 class TransmitterController:
 
-    def __init__(self, pi_control: pigpio.pi, pin: int, repeats: int):
-        self.pi_control = pi_control
+    def __init__(self, gpio_controller: GPIOController, pin: int, repeats: int):
+        self.gpio_controller = gpio_controller
         self.pin = pin
         self.repeats = repeats
 
@@ -16,7 +18,7 @@ class TransmitterController:
         self.sync = None
         self.create_waves()
 
-        self.pi_control.set_mode(self.pin, pigpio.OUTPUT)
+        self.gpio_controller.configure_output_pin(self.pin)
 
     def enable(self, group: str, device: str):
         self.send_tri_state(self.get_code_word(group, device, True))
@@ -39,13 +41,13 @@ class TransmitterController:
 
         chain += [self.sync, 255, 1, self.repeats, 0]
 
-        self.pi_control.wave_chain(chain)
+        self.gpio_controller.wave_chain(chain)
 
-        while self.pi_control.wave_tx_busy():
+        while self.gpio_controller.wave_tx_busy():
             time.sleep(0.1)
 
     def create_waves(self):
-        self.pi_control.wave_clear()
+        self.gpio_controller.wave_clear()
 
         wf = [
             pigpio.pulse(1 << self.pin, 0, 375),
@@ -53,8 +55,8 @@ class TransmitterController:
             pigpio.pulse(1 << self.pin, 0, 375),
             pigpio.pulse(0, 1 << self.pin, 1125)
         ]
-        self.pi_control.wave_add_generic(wf)
-        self.t0 = self.pi_control.wave_create()
+        self.gpio_controller.wave_add_generic(wf)
+        self.t0 = self.gpio_controller.wave_create()
 
         wf = [
             pigpio.pulse(1 << self.pin, 0, 1125),
@@ -62,8 +64,8 @@ class TransmitterController:
             pigpio.pulse(1 << self.pin, 0, 1125),
             pigpio.pulse(0, 1 << self.pin, 375),
         ]
-        self.pi_control.wave_add_generic(wf)
-        self.t1 = self.pi_control.wave_create()
+        self.gpio_controller.wave_add_generic(wf)
+        self.t1 = self.gpio_controller.wave_create()
 
         wf = [
             pigpio.pulse(1 << self.pin, 0, 375),
@@ -71,15 +73,15 @@ class TransmitterController:
             pigpio.pulse(1 << self.pin, 0, 1125),
             pigpio.pulse(0, 1 << self.pin, 375),
         ]
-        self.pi_control.wave_add_generic(wf)
-        self.tf = self.pi_control.wave_create()
+        self.gpio_controller.wave_add_generic(wf)
+        self.tf = self.gpio_controller.wave_create()
 
         wf = [
             pigpio.pulse(1 << self.pin, 0, 375),
             pigpio.pulse(0, 1 << self.pin, 9000)
         ]
-        self.pi_control.wave_add_generic(wf)
-        self.sync = self.pi_control.wave_create()
+        self.gpio_controller.wave_add_generic(wf)
+        self.sync = self.gpio_controller.wave_create()
 
     @staticmethod
     def get_code_word(group: str, device: str, status: bool):

@@ -1,11 +1,11 @@
 from rest_framework import serializers
 
-from device_controller_api.models import AddressableLEDStrip, LEDStrip, RemoteSocket, Transmitter, Controller
+from device_controller_api.models import AddressableLEDStrip, LEDStrip, RemoteSocket, Transmitter, RemoteGPIOController
 
 
 class ControllerSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = Controller
+        model = RemoteGPIOController
         fields = ('id', 'name', 'hostname', 'port')
 
 

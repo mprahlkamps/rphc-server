@@ -1,12 +1,13 @@
 from django.test import TestCase
 
-from device_controller_api.models import RemoteSocket, Controller, Transmitter, AddressableLEDStrip
+from device_controller_api.models import AddressableLEDStrip, RemoteGPIOController
 
 
 class AddressableLEDStripTestCase(TestCase):
 
     def setUp(self):
-        self.controller = Controller.objects.create(name="controller", hostname="localhost", port=8888)
+        self.controller = RemoteGPIOController.objects.create(name="controller", hostname="localhost", port=8888,
+                                                              controller_type=RemoteGPIOController.FAKE_CONTROLLER)
         self.controller.save()
 
     def test_create_addressable_led_strip(self):

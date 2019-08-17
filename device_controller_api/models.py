@@ -1,17 +1,28 @@
 from django.db import models
 
 
-class Controller(models.Model):
+class RemoteGPIOController(models.Model):
+    PIGPIO_CONTROLLER = 'PI'
+    ARDUINO_CONTROLLER = 'AR'
+    FAKE_CONTROLLER = 'FA'
+
+    CONTROLLER_TYPE = [
+        (PIGPIO_CONTROLLER, 'PIGPIO Controller'),
+        (ARDUINO_CONTROLLER, 'Arduino Controller'),
+        (FAKE_CONTROLLER, 'Fake Controller'),
+    ]
+
     name = models.CharField(max_length=50)
     hostname = models.CharField(max_length=50)
     port = models.IntegerField()
+    controller_type = models.CharField(max_length=2, choices=CONTROLLER_TYPE, default=PIGPIO_CONTROLLER)
 
     def __str__(self):
-        return "Controller ({}:{})".format(self.hostname, self.port)
+        return "GPIO Controller ({})".format(self.name)
 
 
 class AddressableLEDStrip(models.Model):
-    controller = models.ForeignKey("Controller", on_delete=models.CASCADE)
+    controller = models.ForeignKey("RemoteGPIOController", on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     spi_device = models.IntegerField()
     led_count = models.IntegerField()
@@ -21,7 +32,7 @@ class AddressableLEDStrip(models.Model):
 
 
 class LEDStrip(models.Model):
-    controller = models.ForeignKey("Controller", on_delete=models.CASCADE)
+    controller = models.ForeignKey("RemoteGPIOController", on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     red_pin = models.IntegerField()
     green_pin = models.IntegerField()
@@ -32,7 +43,7 @@ class LEDStrip(models.Model):
 
 
 class Transmitter(models.Model):
-    controller = models.ForeignKey("Controller", on_delete=models.CASCADE)
+    controller = models.ForeignKey("RemoteGPIOController", on_delete=models.CASCADE)
     pin = models.IntegerField()
     retries = models.IntegerField()
 

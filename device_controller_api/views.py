@@ -3,13 +3,13 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 
 from device_controller_api.controller.controller_manager import ControllerManager
-from device_controller_api.models import AddressableLEDStrip, RemoteSocket, Transmitter, Controller
+from device_controller_api.models import AddressableLEDStrip, RemoteSocket, Transmitter, RemoteGPIOController
 from device_controller_api.serializers import AddressableLedStripSerializer, RemoteSocketSerializer, \
     TransmitterSerializer, ControllerSerializer
 
 
 class ControllerViewSet(viewsets.ModelViewSet):
-    queryset = Controller.objects.all()
+    queryset = RemoteGPIOController.objects.all()
     serializer_class = ControllerSerializer
 
 

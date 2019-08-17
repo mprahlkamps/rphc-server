@@ -1,19 +1,22 @@
+from device_controller_api.controller.gpio.gpio_controller import GPIOController
+
+
 class WS2801Controller:
 
-    def __init__(self, pi_control, device, led_count):
+    def __init__(self, gpio_controller: GPIOController, spi_channel, led_count):
         """
         WS2801 Addressable LED controller
 
-        :param pi_control: pigpio instance
-        :param device: SPI device (0-1)
+        :param gpio_controller:
+        :param spi_channel: SPI channel (0-1)
         :param led_count: Number of LEDs to use
         """
-        self.pi_control = pi_control
-        self.device = device
+        self.gpio_controller = gpio_controller
+        self.spi_channel = spi_channel
         self.led_count = led_count
 
         self.colors = [0] * (led_count * 3)
-        self.spi_handle = self.pi_control.spi_open(0, 1000000, 3)
+        self.spi_handle = self.gpio_controller.spi_open(self.spi_channel, 1000000, 3)
 
     def set_color(self, index: int, r: int, g: int, b: int):
         self.colors[int(index * 3)] = r
@@ -21,7 +24,7 @@ class WS2801Controller:
         self.colors[int(index * 3) + 1] = b
 
     def show(self):
-        self.pi_control.spi_write(self.spi_handle, self.colors)
+        self.gpio_controller.spi_write(self.spi_handle, self.colors)
 
     def set_color_all(self, r: int, g: int, b: int):
         self.colors = [r, b, g] * self.led_count
@@ -48,10 +51,7 @@ class WS2801Controller:
         :return: None
         """
         clear_colors = [0, 0, 0] * led_count
-        self.pi_control.spi_write(self.spi_handle, clear_colors)
+        self.gpio_controller.spi_write(self.spi_handle, clear_colors)
 
     def close(self):
-        self.pi_control.spi_close(self.spi_handle)
-
-    def start_program(self):
-        pass
+        self.gpio_controller.spi_close(self.spi_handle)
