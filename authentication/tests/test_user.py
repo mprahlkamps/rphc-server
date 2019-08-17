@@ -12,11 +12,7 @@ class AuthenticationTest(TestCase):
         pass
 
     def test_create_user(self):
-        try:
-            user = User.objects.create_user(email="admin@admin.de", password="admin")
-        except Exception as e:
-            self.fail(e)
-
+        user = User.objects.create_user(email="admin@admin.de", password="admin")
         self.assertIsNotNone(user)
 
     def test_create_user_no_email(self):
@@ -24,11 +20,7 @@ class AuthenticationTest(TestCase):
             User.objects.create_user(email="", password="admin")
 
     def test_create_super_user(self):
-        try:
-            user = User.objects.create_superuser(email="admin@admin.de", password="admin")
-        except Exception as e:
-            self.fail(e)
-
+        user = User.objects.create_superuser(email="admin@admin.de", password="admin")
         self.assertIsNotNone(user)
 
     def test_create_super_user_no_email(self):
