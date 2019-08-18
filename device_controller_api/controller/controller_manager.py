@@ -51,7 +51,8 @@ class ControllerManager:
             controller = ControllerManager.get_gpio_controller(led_strip.controller.id)
             ControllerManager.addressable_led_controller[led_strip_id] = WS2801AddressableLEDController(controller,
                                                                                                         led_strip.spi_device,
-                                                                                                        led_strip.led_count)
+                                                                                                        led_strip.led_count,
+                                                                                                        led_strip.usable_led_count)
 
         return ControllerManager.addressable_led_controller[led_strip_id]
 
