@@ -32,6 +32,7 @@ class AddressableLEDStrip(models.Model):
     controller = models.ForeignKey("RemoteGPIOController", on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     led_count = models.IntegerField()
+    usable_led_count = models.IntegerField()
 
     spi_device = models.IntegerField()
     controller_type = models.CharField(max_length=2, choices=ADDRESSABLE_LED_TYPE, default=WS2801)

@@ -14,8 +14,9 @@ class AddressableLEDStripTestCase(TestCase):
         try:
             led_strip = AddressableLEDStrip.objects.create(controller=self.controller,
                                                            name="Addressable LED Strip",
-                                                           spi_device=1,
-                                                           led_count=88)
+                                                           spi_device=0,
+                                                           led_count=200,
+                                                           usable_led_count=89)
             led_strip.save()
         except Exception as e:
             self.fail(e)
@@ -23,7 +24,8 @@ class AddressableLEDStripTestCase(TestCase):
     def test_addressable_led_strip_str(self):
         led_strip = AddressableLEDStrip.objects.create(controller=self.controller,
                                                        name="Addressable LED Strip",
-                                                       spi_device=1,
-                                                       led_count=88)
+                                                       spi_device=0,
+                                                       led_count=200,
+                                                       usable_led_count=98)
 
         self.assertEqual(str(led_strip), "Addressable LED Strip (Addressable LED Strip)")
