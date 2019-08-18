@@ -16,7 +16,7 @@ class RemoteGPIOController(models.Model):
 
     hostname = models.CharField(max_length=50)
     port = models.IntegerField()
-    controller_type = models.CharField(max_length=2, choices=CONTROLLER_TYPE, default=RASPBERRY_PI_CONTROLLER)
+    type = models.CharField(max_length=2, choices=CONTROLLER_TYPE, default=RASPBERRY_PI_CONTROLLER)
 
     def __str__(self):
         return "GPIO Controller ({})".format(self.name)
@@ -31,11 +31,11 @@ class AddressableLEDStrip(models.Model):
 
     controller = models.ForeignKey("RemoteGPIOController", on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
+
     led_count = models.IntegerField()
     usable_led_count = models.IntegerField()
-
     spi_device = models.IntegerField()
-    controller_type = models.CharField(max_length=2, choices=ADDRESSABLE_LED_TYPE, default=WS2801)
+    type = models.CharField(max_length=2, choices=ADDRESSABLE_LED_TYPE, default=WS2801)
 
     def __str__(self):
         return "Addressable LED Strip ({})".format(self.name)

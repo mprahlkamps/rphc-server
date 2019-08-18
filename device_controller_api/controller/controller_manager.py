@@ -26,13 +26,13 @@ class ControllerManager:
         if controller_id not in ControllerManager.gpio_controller:
             controller = RemoteGPIOController.objects.get(id=controller_id)
 
-            if controller.controller_type == RemoteGPIOController.RASPBERRY_PI_CONTROLLER:
+            if controller.type == RemoteGPIOController.RASPBERRY_PI_CONTROLLER:
                 ControllerManager.gpio_controller[controller_id] = RaspberryPiGPIOController(controller.hostname,
                                                                                              controller.port)
-            elif controller.controller_type == RemoteGPIOController.ARDUINO_CONTROLLER:
+            elif controller.type == RemoteGPIOController.ARDUINO_CONTROLLER:
                 ControllerManager.gpio_controller[controller_id] = ArduinoGPIOController(controller.hostname,
                                                                                          controller.port)
-            elif controller.controller_type == RemoteGPIOController.FAKE_CONTROLLER:
+            elif controller.type == RemoteGPIOController.FAKE_CONTROLLER:
                 ControllerManager.gpio_controller[controller_id] = FakeGPIOController()
             else:
                 raise Exception("Unknown controller type")
@@ -49,10 +49,14 @@ class ControllerManager:
         if led_strip_id not in ControllerManager.addressable_led_controller:
             led_strip = AddressableLEDStrip.objects.select_related('controller').get(id=led_strip_id)
             controller = ControllerManager.get_gpio_controller(led_strip.controller.id)
-            ControllerManager.addressable_led_controller[led_strip_id] = WS2801AddressableLEDController(controller,
-                                                                                                        led_strip.spi_device,
-                                                                                                        led_strip.led_count,
-                                                                                                        led_strip.usable_led_count)
+
+            if led_strip.type == AddressableLEDStrip.WS2801:
+                ControllerManager.addressable_led_controller[led_strip_id] = WS2801AddressableLEDController(controller,
+                                                                                                            led_strip.spi_device,
+                                                                                                            led_strip.led_count,
+                                                                                                            led_strip.usable_led_count)
+            else:
+                raise Exception("Unknown addressable led type")
 
         return ControllerManager.addressable_led_controller[led_strip_id]
 

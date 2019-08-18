@@ -7,7 +7,7 @@ class TransmitterTestCase(TestCase):
 
     def setUp(self):
         self.controller = RemoteGPIOController.objects.create(name="controller", hostname="localhost", port=8888,
-                                                              controller_type=RemoteGPIOController.FAKE_CONTROLLER)
+                                                              type=RemoteGPIOController.FAKE_CONTROLLER)
         self.controller.save()
 
     def test_create_transmitter(self):

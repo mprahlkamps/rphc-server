@@ -11,7 +11,7 @@ class ControllerManagerTestCase(TestCase):
         controller = RemoteGPIOController.objects.create(name="pi controller 1",
                                                          hostname="localhost",
                                                          port=8888,
-                                                         controller_type=RemoteGPIOController.FAKE_CONTROLLER)
+                                                         type=RemoteGPIOController.FAKE_CONTROLLER)
         controller.save()
 
         self.assertIsInstance(ControllerManager.get_gpio_controller(controller.id), FakeGPIOController)

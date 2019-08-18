@@ -7,7 +7,7 @@ class RemoteSocketTestCase(TestCase):
 
     def setUp(self):
         controller = RemoteGPIOController.objects.create(name="controller", hostname="localhost", port=8888,
-                                                         controller_type=RemoteGPIOController.FAKE_CONTROLLER)
+                                                         type=RemoteGPIOController.FAKE_CONTROLLER)
         controller.save()
 
         self.transmitter = WirelessTransmitter.objects.create(controller=controller, name="Transmitter", pin=17)
