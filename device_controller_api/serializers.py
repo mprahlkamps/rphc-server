@@ -13,7 +13,7 @@ class ControllerSerializer(serializers.HyperlinkedModelSerializer):
 class AddressableLedStripSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = AddressableLEDStrip
-        fields = ('id', 'name', 'controller', 'spi_device', 'led_count')
+        fields = ('id', 'name', 'controller', 'spi_device', 'led_count', 'usable_led_count')
 
 
 class LedStripSerializer(serializers.HyperlinkedModelSerializer):

@@ -4,6 +4,7 @@ import os
 import queue
 import re
 import time
+from enum import Enum
 from threading import Thread, Event
 from typing import List, Optional
 
@@ -13,7 +14,13 @@ from utils.exceptions import IllegalStateException
 logger = logging.getLogger(__name__)
 
 
+class State(Enum):
+    NO_PROGRAM = 0
+    PROGRAM_RUNNING = 1
+
+
 class ProgramManager:
+
     var_queue = queue.Queue()
     stop_program_flag: Event = Event()
     active_program: Optional[ProgramPlugin] = None

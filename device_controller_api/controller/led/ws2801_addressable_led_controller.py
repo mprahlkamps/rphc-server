@@ -29,7 +29,7 @@ class WS2801AddressableLEDController(AddressableLEDController):
 
     def set_color(self, color: Tuple[int, int, int]):
         color = (color[0], color[2], color[1])
-        self.colors = list(color * self.led_count) + ([0] * (3 * (self.led_count - self.usable_led_count)))
+        self.colors = list(color * self.usable_led_count) + ([0] * (3 * (self.led_count - self.usable_led_count)))
 
     def show(self):
         self.gpio_controller.spi_write(self.spi_handle, self.colors)
