@@ -28,12 +28,4 @@ class LEDStripTestCase(TestCase):
                                             green_pin=11,
                                             blue_pin=12)
 
-        self.assertEqual(str(led_strip), "LED Strip (10,11,12)")
-
-        led_strip = LEDStrip.objects.create(controller=self.controller,
-                                            name="LED Strip",
-                                            red_pin=20,
-                                            green_pin=21,
-                                            blue_pin=22)
-
-        self.assertEqual(str(led_strip), "LED Strip (20,21,22)")
+        self.assertEqual(str(led_strip), "LED Strip (LED Strip)")

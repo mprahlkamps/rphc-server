@@ -3,9 +3,9 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 
 from device_controller_api.controller.controller_manager import ControllerManager
-from device_controller_api.models import AddressableLEDStrip, RemoteSocket, Transmitter, RemoteGPIOController
+from device_controller_api.models import AddressableLEDStrip, RemoteSocket, WirelessTransmitter, RemoteGPIOController
 from device_controller_api.serializers import AddressableLedStripSerializer, RemoteSocketSerializer, \
-    TransmitterSerializer, ControllerSerializer
+    WirelessTransmitterSerializer, ControllerSerializer
 
 
 class ControllerViewSet(viewsets.ModelViewSet):
@@ -24,8 +24,8 @@ class RemoteSocketViewSet(viewsets.ModelViewSet):
 
 
 class TransmitterViewSet(viewsets.ModelViewSet):
-    queryset = Transmitter.objects.all()
-    serializer_class = TransmitterSerializer
+    queryset = WirelessTransmitter.objects.all()
+    serializer_class = WirelessTransmitterSerializer
 
 
 class SetAddressableLedStripColor(GenericAPIView):

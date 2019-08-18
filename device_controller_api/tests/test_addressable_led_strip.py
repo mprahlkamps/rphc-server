@@ -26,11 +26,4 @@ class AddressableLEDStripTestCase(TestCase):
                                                        spi_device=1,
                                                        led_count=88)
 
-        self.assertEqual(str(led_strip), "Addressable LED Strip (1)")
-
-        led_strip = AddressableLEDStrip.objects.create(controller=self.controller,
-                                                       name="Addressable LED Strip",
-                                                       spi_device=2,
-                                                       led_count=88)
-
-        self.assertEqual(str(led_strip), "Addressable LED Strip (2)")
+        self.assertEqual(str(led_strip), "Addressable LED Strip (Addressable LED Strip)")

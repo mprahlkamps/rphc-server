@@ -1,23 +1,26 @@
 from abc import ABC, abstractmethod
-from typing import Any, List
+from enum import Enum
+from typing import Any, List, Tuple
+
+
+class PinConfig(Enum):
+    INPUT = 0
+    OUTPUT = 1
+
+
+class PowerLevel(Enum):
+    LOW = 0
+    HIGH = 1
 
 
 class GPIOController(ABC):
 
     @abstractmethod
-    def configure_input_pin(self, pin: int):
+    def configure_pin(self, pin: int, config: PinConfig):
         """
 
         :param pin:
-        :return:
-        """
-        pass
-
-    @abstractmethod
-    def configure_output_pin(self, pin: int):
-        """
-
-        :param pin:
+        :param config:
         :return:
         """
         pass
@@ -72,43 +75,33 @@ class GPIOController(ABC):
         pass
 
     @abstractmethod
-    def wave_clear(self):
+    def create_wave(self, pin: int, data: List[Tuple[PowerLevel, int]]):
         """
-
-        :return:
-        """
-        pass
-
-    @abstractmethod
-    def wave_add_generic(self, waves: List[Any]) -> Any:
-        """
-
-        :param waves:
-        :return:
-        """
-        pass
-
-    @abstractmethod
-    def wave_create(self) -> Any:
-        """
-
-        :return:
-        """
-        pass
-
-    @abstractmethod
-    def wave_chain(self, data: List[Any]):
-        """
-
+        data = [
+            (HIGH/LOW, time),
+            (HIGH/LOW, time),
+            (HIGH/LOW, time),
+            ...
+        ]
+        :param pin:
         :param data:
         :return:
         """
         pass
 
     @abstractmethod
-    def wave_tx_busy(self):
+    def clear_waves(self):
         """
 
+        :return:
+        """
+        pass
+
+    @abstractmethod
+    def send_wave_chain(self, data):
+        """
+
+        :param data:
         :return:
         """
         pass

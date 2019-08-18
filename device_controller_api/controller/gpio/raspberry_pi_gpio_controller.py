@@ -1,8 +1,9 @@
-from typing import List, Any
+import time
+from typing import List, Tuple
 
 import pigpio
 
-from device_controller_api.controller.gpio.gpio_controller import GPIOController
+from device_controller_api.controller.gpio.gpio_controller import GPIOController, PinConfig, PowerLevel
 
 
 class RaspberryPiGPIOController(GPIOController):
@@ -10,16 +11,18 @@ class RaspberryPiGPIOController(GPIOController):
     def __init__(self, hostname: str, port: int):
         self.controller = pigpio.pi(hostname, port)
 
-    def configure_input_pin(self, pin: int):
-        self.controller.set_mode(pin, pigpio.INPUT)
+    def configure_pin(self, pin: int, config: PinConfig):
+        if config == PinConfig.INPUT:
+            self.controller.set_mode(pin, pigpio.INPUT)
+        elif config == PinConfig.OUTPUT:
+            self.controller.set_mode(pin, pigpio.OUTPUT)
+        else:
+            raise Exception("Unknown Pin configuration")
 
-    def configure_output_pin(self, pin: int):
-        self.controller.set_mode(pin, pigpio.OUTPUT)
-
-    def read(self, pin: int) -> int:
+    def read(self, pin: int) -> PowerLevel:
         return self.controller.read(pin)
 
-    def write(self, pin: int, level: int):
+    def write(self, pin: int, level: PowerLevel):
         self.controller.write(pin, level)
 
     def spi_open(self, channel: int, boud: int, flags: int) -> int:
@@ -31,17 +34,21 @@ class RaspberryPiGPIOController(GPIOController):
     def spi_write(self, handle: int, data: List[int]):
         self.controller.spi_write(handle, data)
 
-    def wave_clear(self):
-        self.controller.wave_clear()
+    def create_wave(self, pin: int, data: List[Tuple[PowerLevel, int]]):
+        wf = []
+        for s in data:
+            if s[0] == PowerLevel.HIGH:
+                wf.append(pigpio.pulse(1 << pin, 0, s[1]))
+            elif s[0] == PowerLevel.LOW:
+                wf.append(pigpio.pulse(0, 1 << pin, s[1]))
 
-    def wave_add_generic(self, waves: List[Any]):
-        self.controller.wave_add_generic(waves)
-
-    def wave_create(self) -> Any:
+        self.controller.wave_add_generic(wf)
         return self.controller.wave_create()
 
-    def wave_chain(self, data: List[Any]):
-        self.controller.wave_chain(data)
+    def clear_waves(self):
+        self.controller.wave_clear()
 
-    def wave_tx_busy(self):
-        self.controller.wave_tx_busy()
+    def send_wave_chain(self, data):
+        self.controller.wave_chain(data)
+        while self.controller.wave_tx_busy():
+            time.sleep(0.1)

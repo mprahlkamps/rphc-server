@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from device_controller_api.models import Transmitter, RemoteGPIOController
+from device_controller_api.models import WirelessTransmitter, RemoteGPIOController
 
 
 class TransmitterTestCase(TestCase):
@@ -12,20 +12,15 @@ class TransmitterTestCase(TestCase):
 
     def test_create_transmitter(self):
         try:
-            transmitter = Transmitter.objects.create(controller=self.controller,
-                                                     pin=17,
-                                                     retries=10)
+            transmitter = WirelessTransmitter.objects.create(controller=self.controller,
+                                                             name="Transmitter",
+                                                             pin=17)
             transmitter.save()
         except Exception as e:
             self.fail(e)
 
     def test_transmitter_str(self):
-        transmitter = Transmitter.objects.create(controller=self.controller,
-                                                 pin=17,
-                                                 retries=10)
-        self.assertEqual(str(transmitter), "Transmitter (17)")
-
-        transmitter = Transmitter.objects.create(controller=self.controller,
-                                                 pin=20,
-                                                 retries=10)
-        self.assertEqual(str(transmitter), "Transmitter (20)")
+        transmitter = WirelessTransmitter.objects.create(controller=self.controller,
+                                                         name="Transmitter",
+                                                         pin=17)
+        self.assertEqual(str(transmitter), "Transmitter (Transmitter)")

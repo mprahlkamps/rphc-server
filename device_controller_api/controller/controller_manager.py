@@ -4,17 +4,17 @@ from device_controller_api.controller.gpio.arduino_gpio_controller import Arduin
 from device_controller_api.controller.gpio.fake_gpio_controller import FakeGPIOController
 from device_controller_api.controller.gpio.gpio_controller import GPIOController
 from device_controller_api.controller.gpio.raspberry_pi_gpio_controller import RaspberryPiGPIOController
-from device_controller_api.controller.led.ws2801_controller import WS2801Controller
+from device_controller_api.controller.led.ws2801_addressable_led_controller import WS2801AddressableLEDController
 from device_controller_api.controller.socket.remote_socket_controller import RemoteSocketController
-from device_controller_api.controller.socket.transmitter_controller import TransmitterController
-from device_controller_api.models import RemoteGPIOController, AddressableLEDStrip, Transmitter, RemoteSocket
+from device_controller_api.controller.socket.wireless_transmitter_controller import WirelessTransmitterController
+from device_controller_api.models import RemoteGPIOController, AddressableLEDStrip, WirelessTransmitter, RemoteSocket
 
 
 class ControllerManager:
     gpio_controller: Dict[int, GPIOController] = {}
-    transmitter_controller: Dict[int, TransmitterController] = {}
+    transmitter_controller: Dict[int, WirelessTransmitterController] = {}
     remote_socket_controller: Dict[int, RemoteSocketController] = {}
-    addressable_led_controller: Dict[int, WS2801Controller] = {}
+    addressable_led_controller: Dict[int, WS2801AddressableLEDController] = {}
 
     @staticmethod
     def get_gpio_controller(controller_id: int) -> GPIOController:
@@ -26,7 +26,7 @@ class ControllerManager:
         if controller_id not in ControllerManager.gpio_controller:
             controller = RemoteGPIOController.objects.get(id=controller_id)
 
-            if controller.controller_type == RemoteGPIOController.PIGPIO_CONTROLLER:
+            if controller.controller_type == RemoteGPIOController.RASPBERRY_PI_CONTROLLER:
                 ControllerManager.gpio_controller[controller_id] = RaspberryPiGPIOController(controller.hostname,
                                                                                              controller.port)
             elif controller.controller_type == RemoteGPIOController.ARDUINO_CONTROLLER:
@@ -40,7 +40,7 @@ class ControllerManager:
         return ControllerManager.gpio_controller[controller_id]
 
     @staticmethod
-    def get_addressable_led_strip_controller(led_strip_id: int) -> WS2801Controller:
+    def get_addressable_led_strip_controller(led_strip_id: int) -> WS2801AddressableLEDController:
         """
 
         :param led_strip_id:
@@ -49,25 +49,24 @@ class ControllerManager:
         if led_strip_id not in ControllerManager.addressable_led_controller:
             led_strip = AddressableLEDStrip.objects.select_related('controller').get(id=led_strip_id)
             controller = ControllerManager.get_gpio_controller(led_strip.controller.id)
-            ControllerManager.addressable_led_controller[led_strip_id] = WS2801Controller(controller,
-                                                                                          led_strip.spi_device,
-                                                                                          led_strip.led_count)
+            ControllerManager.addressable_led_controller[led_strip_id] = WS2801AddressableLEDController(controller,
+                                                                                                        led_strip.spi_device,
+                                                                                                        led_strip.led_count)
 
         return ControllerManager.addressable_led_controller[led_strip_id]
 
     @staticmethod
-    def get_transmitter_controller(transmitter_id: int) -> TransmitterController:
+    def get_transmitter_controller(transmitter_id: int) -> WirelessTransmitterController:
         """
 
         :param transmitter_id:
         :return:
         """
         if transmitter_id not in ControllerManager.transmitter_controller:
-            transmitter = Transmitter.objects.select_related('controller').get(id=transmitter_id)
+            transmitter = WirelessTransmitter.objects.select_related('controller').get(id=transmitter_id)
             controller = ControllerManager.get_gpio_controller(transmitter.controller.id)
-            ControllerManager.transmitter_controller[transmitter_id] = TransmitterController(controller,
-                                                                                             transmitter.pin,
-                                                                                             transmitter.retries)
+            ControllerManager.transmitter_controller[transmitter_id] = WirelessTransmitterController(controller,
+                                                                                                     transmitter.pin)
 
         return ControllerManager.transmitter_controller[transmitter_id]
 

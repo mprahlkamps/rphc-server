@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from device_controller_api.models import RemoteSocket, Transmitter, RemoteGPIOController
+from device_controller_api.models import RemoteSocket, WirelessTransmitter, RemoteGPIOController
 
 
 class RemoteSocketTestCase(TestCase):
@@ -10,7 +10,7 @@ class RemoteSocketTestCase(TestCase):
                                                          controller_type=RemoteGPIOController.FAKE_CONTROLLER)
         controller.save()
 
-        self.transmitter = Transmitter.objects.create(controller=controller, pin=17, retries=10)
+        self.transmitter = WirelessTransmitter.objects.create(controller=controller, name="Transmitter", pin=17)
         self.transmitter.save()
 
     def test_create_remote_socket(self):
@@ -18,7 +18,8 @@ class RemoteSocketTestCase(TestCase):
             remote_socket = RemoteSocket.objects.create(transmitter=self.transmitter,
                                                         name="test_socket",
                                                         group="10000",
-                                                        device="10000")
+                                                        device="10000",
+                                                        repeats=10)
             remote_socket.save()
         except Exception as e:
             self.fail(e)
@@ -27,6 +28,7 @@ class RemoteSocketTestCase(TestCase):
         remote_socket = RemoteSocket.objects.create(transmitter=self.transmitter,
                                                     name="test_socket",
                                                     group="10000",
-                                                    device="10000")
+                                                    device="10000",
+                                                    repeats=10)
 
         self.assertEquals(str(remote_socket), "Remote Socket (test_socket)")

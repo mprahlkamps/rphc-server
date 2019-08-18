@@ -1,12 +1,17 @@
-from typing import List, Any
+from typing import List, Any, Tuple
 
-from device_controller_api.controller.gpio.gpio_controller import GPIOController
+from device_controller_api.controller.gpio.gpio_controller import GPIOController, PowerLevel, PinConfig
 
 
 class ArduinoGPIOController(GPIOController):
 
     def __init__(self, hostname: str, port: int):
+        self.hostname = hostname
+        self.port = port
         self.controller = None
+
+    def configure_pin(self, pin: int, config: PinConfig):
+        pass
 
     def configure_input_pin(self, pin: int):
         pass
@@ -29,17 +34,11 @@ class ArduinoGPIOController(GPIOController):
     def spi_write(self, spi_handle: Any, data: List[int]):
         pass
 
-    def wave_clear(self):
+    def create_wave(self, pin: int, data: List[Tuple[PowerLevel, int]]):
         pass
 
-    def wave_add_generic(self, waves: List[Any]):
+    def clear_waves(self):
         pass
 
-    def wave_create(self) -> Any:
-        pass
-
-    def wave_chain(self, data: List[Any]):
-        pass
-
-    def wave_tx_busy(self):
+    def send_wave_chain(self, data):
         pass
