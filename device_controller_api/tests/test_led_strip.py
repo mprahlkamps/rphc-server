@@ -8,16 +8,14 @@ class LEDStripTestCase(TestCase):
     def setUp(self):
         self.controller = RemoteGPIOController.objects.create(name="controller", hostname="localhost", port=8888,
                                                               type=RemoteGPIOController.FAKE_CONTROLLER)
-        self.controller.save()
 
     def test_create_led_strip(self):
         try:
-            led_strip = LEDStrip.objects.create(controller=self.controller,
-                                                name="LED Strip",
-                                                red_pin=10,
-                                                green_pin=11,
-                                                blue_pin=12)
-            led_strip.save()
+            LEDStrip.objects.create(controller=self.controller,
+                                    name="LED Strip",
+                                    red_pin=10,
+                                    green_pin=11,
+                                    blue_pin=12)
         except Exception as e:
             self.fail(e)
 

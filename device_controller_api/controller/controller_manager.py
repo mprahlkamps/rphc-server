@@ -90,3 +90,19 @@ class ControllerManager:
                                                                                            remote_socket.device)
 
         return ControllerManager.remote_socket_controller[socket_id]
+
+    @staticmethod
+    def clear_gpio_controller():
+        ControllerManager.gpio_controller.clear()
+
+    @staticmethod
+    def clear_transmitter_controller():
+        ControllerManager.transmitter_controller.clear()
+
+    @staticmethod
+    def clear_remote_socket_controller():
+        ControllerManager.remote_socket_controller.clear()
+
+    @staticmethod
+    def clear_addressable_led_controller():
+        ControllerManager.addressable_led_controller.clear()

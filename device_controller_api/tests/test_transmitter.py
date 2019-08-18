@@ -8,14 +8,12 @@ class TransmitterTestCase(TestCase):
     def setUp(self):
         self.controller = RemoteGPIOController.objects.create(name="controller", hostname="localhost", port=8888,
                                                               type=RemoteGPIOController.FAKE_CONTROLLER)
-        self.controller.save()
 
     def test_create_transmitter(self):
         try:
-            transmitter = WirelessTransmitter.objects.create(controller=self.controller,
-                                                             name="Transmitter",
-                                                             pin=17)
-            transmitter.save()
+            WirelessTransmitter.objects.create(controller=self.controller,
+                                               name="Transmitter",
+                                               pin=17)
         except Exception as e:
             self.fail(e)
 

@@ -7,9 +7,8 @@ class ControllerTestCase(TestCase):
 
     def test_create_controller(self):
         try:
-            controller = RemoteGPIOController.objects.create(name="controller", hostname="localhost", port=8888,
-                                                             type=RemoteGPIOController.FAKE_CONTROLLER)
-            controller.save()
+            RemoteGPIOController.objects.create(name="controller", hostname="localhost", port=8888,
+                                                type=RemoteGPIOController.FAKE_CONTROLLER)
         except Exception as e:
             self.fail(e)
 
