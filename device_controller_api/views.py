@@ -32,10 +32,13 @@ class SetAddressableLedStripColor(GenericAPIView):
     @staticmethod
     def post(request, **kwargs):
         led_strip_id = kwargs['pk']
-        color = request.data
+        color_data = request.data
+        color = (int(color_data['r']), int(color_data['g']), int(color_data['b']))
+
+        # TODO: Add checks
 
         led_strip_controller = ControllerManager.get_addressable_led_strip_controller(led_strip_id)
-        led_strip_controller.set_color_all(int(color['r']), int(color['g']), int(color['b']))
+        led_strip_controller.set_color(color)
         led_strip_controller.show()
 
         return Response({'msg': 'Set color {}'.format(color)})
