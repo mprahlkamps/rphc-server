@@ -1,11 +1,12 @@
 from rest_framework import serializers
 
-from device_controller_api.models import AddressableLEDStrip, LEDStrip, RemoteSocket, Transmitter, Controller
+from device_controller_api.models import AddressableLEDStrip, LEDStrip, RemoteSocket, WirelessTransmitter, \
+    RemoteGPIOController
 
 
 class ControllerSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = Controller
+        model = RemoteGPIOController
         fields = ('id', 'name', 'hostname', 'port')
 
 
@@ -24,10 +25,10 @@ class LedStripSerializer(serializers.HyperlinkedModelSerializer):
 class RemoteSocketSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = RemoteSocket
-        fields = ('id', 'name', 'transmitter', 'group', 'device')
+        fields = ('id', 'name', 'transmitter', 'group', 'device', 'repeats')
 
 
-class TransmitterSerializer(serializers.HyperlinkedModelSerializer):
+class WirelessTransmitterSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = Transmitter
+        model = WirelessTransmitter
         fields = ('id', 'controller', 'pin')

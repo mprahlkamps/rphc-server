@@ -1,34 +1,46 @@
 from typing import Dict
 
-import pigpio
-
-from device_controller_api.controller.remote_socket_controller import RemoteSocketController
-from device_controller_api.controller.transmitter_controller import TransmitterController
-from device_controller_api.controller.ws2801_controller import WS2801Controller
-from device_controller_api.models import Controller, AddressableLEDStrip, Transmitter, RemoteSocket
+from device_controller_api.controller.gpio.arduino_gpio_controller import ArduinoGPIOController
+from device_controller_api.controller.gpio.fake_gpio_controller import FakeGPIOController
+from device_controller_api.controller.gpio.gpio_controller import GPIOController
+from device_controller_api.controller.gpio.raspberry_pi_gpio_controller import RaspberryPiGPIOController
+from device_controller_api.controller.led.ws2801_addressable_led_controller import WS2801AddressableLEDController
+from device_controller_api.controller.socket.remote_socket_controller import RemoteSocketController
+from device_controller_api.controller.socket.wireless_transmitter_controller import WirelessTransmitterController
+from device_controller_api.models import RemoteGPIOController, AddressableLEDStrip, WirelessTransmitter, RemoteSocket
 
 
 class ControllerManager:
-    pi_controller: Dict[int, pigpio.pi] = {}
-    transmitter_controller: Dict[int, TransmitterController] = {}
+    gpio_controller: Dict[int, GPIOController] = {}
+    transmitter_controller: Dict[int, WirelessTransmitterController] = {}
     remote_socket_controller: Dict[int, RemoteSocketController] = {}
-    addressable_led_controller: Dict[int, WS2801Controller] = {}
+    addressable_led_controller: Dict[int, WS2801AddressableLEDController] = {}
 
     @staticmethod
-    def get_pi_controller(pi_id: int) -> pigpio.pi:
+    def get_gpio_controller(controller_id: int) -> GPIOController:
         """
 
-        :param pi_id:
+        :param controller_id:
         :return:
         """
-        if pi_id not in ControllerManager.pi_controller:
-            controller = Controller.objects.get(id=pi_id)
-            ControllerManager.pi_controller[pi_id] = pigpio.pi(controller.hostname, controller.port)
+        if controller_id not in ControllerManager.gpio_controller:
+            controller = RemoteGPIOController.objects.get(id=controller_id)
 
-        return ControllerManager.pi_controller[pi_id]
+            if controller.controller_type == RemoteGPIOController.RASPBERRY_PI_CONTROLLER:
+                ControllerManager.gpio_controller[controller_id] = RaspberryPiGPIOController(controller.hostname,
+                                                                                             controller.port)
+            elif controller.controller_type == RemoteGPIOController.ARDUINO_CONTROLLER:
+                ControllerManager.gpio_controller[controller_id] = ArduinoGPIOController(controller.hostname,
+                                                                                         controller.port)
+            elif controller.controller_type == RemoteGPIOController.FAKE_CONTROLLER:
+                ControllerManager.gpio_controller[controller_id] = FakeGPIOController()
+            else:
+                raise Exception("Unknown controller type")
+
+        return ControllerManager.gpio_controller[controller_id]
 
     @staticmethod
-    def get_addressable_led_strip_controller(led_strip_id: int) -> WS2801Controller:
+    def get_addressable_led_strip_controller(led_strip_id: int) -> WS2801AddressableLEDController:
         """
 
         :param led_strip_id:
@@ -36,26 +48,25 @@ class ControllerManager:
         """
         if led_strip_id not in ControllerManager.addressable_led_controller:
             led_strip = AddressableLEDStrip.objects.select_related('controller').get(id=led_strip_id)
-            controller = ControllerManager.get_pi_controller(led_strip.controller.id)
-            ControllerManager.addressable_led_controller[led_strip_id] = WS2801Controller(controller,
-                                                                                          led_strip.spi_device,
-                                                                                          led_strip.led_count)
+            controller = ControllerManager.get_gpio_controller(led_strip.controller.id)
+            ControllerManager.addressable_led_controller[led_strip_id] = WS2801AddressableLEDController(controller,
+                                                                                                        led_strip.spi_device,
+                                                                                                        led_strip.led_count)
 
         return ControllerManager.addressable_led_controller[led_strip_id]
 
     @staticmethod
-    def get_transmitter_controller(transmitter_id: int) -> TransmitterController:
+    def get_transmitter_controller(transmitter_id: int) -> WirelessTransmitterController:
         """
 
         :param transmitter_id:
         :return:
         """
         if transmitter_id not in ControllerManager.transmitter_controller:
-            transmitter = Transmitter.objects.select_related('controller').get(id=transmitter_id)
-            controller = ControllerManager.get_pi_controller(transmitter.controller.id)
-            ControllerManager.transmitter_controller[transmitter_id] = TransmitterController(controller,
-                                                                                             transmitter.pin,
-                                                                                             transmitter.retries)
+            transmitter = WirelessTransmitter.objects.select_related('controller').get(id=transmitter_id)
+            controller = ControllerManager.get_gpio_controller(transmitter.controller.id)
+            ControllerManager.transmitter_controller[transmitter_id] = WirelessTransmitterController(controller,
+                                                                                                     transmitter.pin)
 
         return ControllerManager.transmitter_controller[transmitter_id]
 
