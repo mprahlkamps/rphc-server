@@ -4,10 +4,10 @@ from rest_framework import routers
 from . import views
 
 router = routers.DefaultRouter()
-router.register(r'controller', views.ControllerViewSet)
+router.register(r'controller', views.GpioControllerViewSet)
+router.register(r'led-strip', views.LedStripViewSet)
 router.register(r'addressable-led-strip', views.AddressableLedStripViewSet)
 router.register(r'remote-socket', views.RemoteSocketViewSet)
-router.register(r'transmitter', views.TransmitterViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),

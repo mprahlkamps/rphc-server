@@ -2,4 +2,6 @@ django>=2.2.4
 django-cors-headers==3.0.2
 djangorestframework==3.9.4
 djangorestframework-simplejwt==4.3.0
-pigpio==1.42
+django-polymorphic
+django-rest-polymorphic>=0.1.8
+pigpio>=1.42

@@ -3,29 +3,29 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 
 from device_controller_api.controller.controller_manager import ControllerManager
-from device_controller_api.models import AddressableLEDStrip, RemoteSocket, WirelessTransmitter, RemoteGPIOController
-from device_controller_api.serializers import AddressableLedStripSerializer, RemoteSocketSerializer, \
-    WirelessTransmitterSerializer, ControllerSerializer
+from device_controller_api.models import RemoteSocketModel, GpioControllerModel, AddressableLedStripModel, LedStripModel
+from device_controller_api.serializers import GpioControllerPolymorphicSerializer, \
+    AddressableLedStripPolymorphicSerializer, RemoteSocketPolymorphicSerializer, LedStripPolymorphicSerializer
 
 
-class ControllerViewSet(viewsets.ModelViewSet):
-    queryset = RemoteGPIOController.objects.all()
-    serializer_class = ControllerSerializer
+class GpioControllerViewSet(viewsets.ModelViewSet):
+    queryset = GpioControllerModel.objects.all()
+    serializer_class = GpioControllerPolymorphicSerializer
 
 
 class AddressableLedStripViewSet(viewsets.ModelViewSet):
-    queryset = AddressableLEDStrip.objects.all()
-    serializer_class = AddressableLedStripSerializer
+    queryset = AddressableLedStripModel.objects.all()
+    serializer_class = AddressableLedStripPolymorphicSerializer
+
+
+class LedStripViewSet(viewsets.ModelViewSet):
+    queryset = LedStripModel.objects.all()
+    serializer_class = LedStripPolymorphicSerializer
 
 
 class RemoteSocketViewSet(viewsets.ModelViewSet):
-    queryset = RemoteSocket.objects.all()
-    serializer_class = RemoteSocketSerializer
-
-
-class TransmitterViewSet(viewsets.ModelViewSet):
-    queryset = WirelessTransmitter.objects.all()
-    serializer_class = WirelessTransmitterSerializer
+    queryset = RemoteSocketModel.objects.all()
+    serializer_class = RemoteSocketPolymorphicSerializer
 
 
 class SetAddressableLedStripColor(GenericAPIView):
@@ -45,7 +45,6 @@ class SetAddressableLedStripColor(GenericAPIView):
 
 
 class EnableRemoteSocket(GenericAPIView):
-
     @staticmethod
     def post(request, *args, **kwargs):
         socket_id = kwargs['pk']
@@ -57,7 +56,6 @@ class EnableRemoteSocket(GenericAPIView):
 
 
 class DisableRemoteSocket(GenericAPIView):
-
     @staticmethod
     def post(request, *args, **kwargs):
         socket_id = kwargs['pk']

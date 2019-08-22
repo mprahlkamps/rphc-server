@@ -1,10 +1,17 @@
 from django.contrib import admin
 
-from device_controller_api.models import AddressableLEDStrip, LEDStrip, RemoteSocket, WirelessTransmitter, \
-    RemoteGPIOController
+from device_controller_api.models import LedStripModel, RemoteSocketModel, AddressableLedStripModel, \
+    GpioControllerModel, PigpioGpioControllerModel, WS2801AddressableLedStripModel, RGBLedStripModel, \
+    ErloRemoteSocketModel
 
-admin.site.register(RemoteGPIOController)
-admin.site.register(AddressableLEDStrip)
-admin.site.register(LEDStrip)
-admin.site.register(RemoteSocket)
-admin.site.register(WirelessTransmitter)
+admin.site.register(GpioControllerModel)
+admin.site.register(PigpioGpioControllerModel)
+
+admin.site.register(AddressableLedStripModel)
+admin.site.register(WS2801AddressableLedStripModel)
+
+admin.site.register(LedStripModel)
+admin.site.register(RGBLedStripModel)
+
+admin.site.register(RemoteSocketModel)
+admin.site.register(ErloRemoteSocketModel)
