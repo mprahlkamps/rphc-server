@@ -33,7 +33,7 @@ LOGGING = {
             'level': 'WARNING',
             'handlers': ['console'],
         },
-        'device_controller_api': {
+        'devices': {
             'level': 'INFO',
             'handlers': ['console'],
             'propagate': False,
@@ -54,8 +54,9 @@ INSTALLED_APPS = [
     'rest_framework',
 
     'authentication',
-    'device_controller_api',
-    'program_api'
+    'devices',
+    # 'programs',
+    'home'
 ]
 
 MIDDLEWARE = [
