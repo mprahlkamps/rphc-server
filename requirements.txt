@@ -6,3 +6,4 @@ djangorestframework-simplejwt==4.3.0
 django-polymorphic
 django-rest-polymorphic>=0.1.8
 pigpio>=1.42
+django-colorful
