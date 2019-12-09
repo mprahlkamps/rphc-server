@@ -33,7 +33,7 @@ LOGGING = {
             'level': 'WARNING',
             'handlers': ['console'],
         },
-        'device_controller_api': {
+        'devices': {
             'level': 'INFO',
             'handlers': ['console'],
             'propagate': False,
@@ -44,17 +44,20 @@ LOGGING = {
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
+    'polymorphic',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'colorful',
 
     'corsheaders',
     'rest_framework',
 
     'authentication',
-    'device_controller_api',
-    'program_api'
+    'automation',
+    'devices',
+    'home'
 ]
 
 MIDDLEWARE = [
